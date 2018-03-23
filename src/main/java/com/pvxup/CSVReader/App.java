@@ -45,7 +45,7 @@ public class App {
 		Map<Integer, String> Titles = new HashMap<Integer, String>();
 		String authorjson;
 		
-		for (int it = 90; it <= 110; it++) {		
+		for (int it = 90; it <= 850; it++) {		
 		JSONObject json;
 		try {
 			json = new JSONObject(IOUtils.toString(new URL("http://lektury.gov.pl/api/book/" + it), Charset.forName("UTF-8")));
@@ -66,6 +66,6 @@ public class App {
 		}
 		
 		System.out.println(Authors.values());
-		System.out.println(Titles.values());
+		//System.out.println(Titles.values());
 	}
 }
