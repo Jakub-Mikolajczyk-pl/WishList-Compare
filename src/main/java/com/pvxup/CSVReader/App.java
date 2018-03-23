@@ -1,4 +1,4 @@
-package com.pvxup.WishListCompare;
+package com.pvxup.CSVReader;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

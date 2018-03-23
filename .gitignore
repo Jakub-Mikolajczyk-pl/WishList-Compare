@@ -39,3 +39,4 @@ local.properties
 .classpath
 .settings/
 .loadpath
+/target/
