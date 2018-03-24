@@ -7,7 +7,9 @@ import java.util.Map;
 
 
 public class CSV {
-
+	
+	private static final String DEFAULT_SEPARATOR = ",";
+	
 	String csvFile = "";
 	
 	public CSV(String csvFile) {
@@ -16,7 +18,6 @@ public class CSV {
 	
 	public void CSVReading(Map<Integer, String> hm) {
 		 //String csvFile = "goodreads_library_export.csv";       
-	        String cvsSplitBy = ","; // separator
 
 	        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
 	        	
@@ -25,7 +26,7 @@ public class CSV {
 	        	
 	            while ((line = reader.readLine()) != null) { // loop starts from 2nd line
 	            
-	                String[] author = line.split(cvsSplitBy);
+	                String[] author = line.split(DEFAULT_SEPARATOR);
 	                author[3] = author[3].replace("\"", "");
 	                if (hm.containsValue(author[3])) {
 	                	System.out.println(author[3] + " is on the wishlist");
@@ -40,10 +41,5 @@ public class CSV {
 	        }
 
 	}
-	
-    public static void main(String[] args) {
-
-    }
-
 }
 

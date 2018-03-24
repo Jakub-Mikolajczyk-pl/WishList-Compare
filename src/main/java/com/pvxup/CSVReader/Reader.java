@@ -16,16 +16,18 @@ public class Reader {
 	Map<Integer, String> authors = new HashMap<Integer, String>();
 	Map<Integer, String> titles = new HashMap<Integer, String>();
 	
+	String urlLink = "http://lektury.gov.pl/api/book/";
+	
 	/**
 	 * Method replaces first and last author's name with formatted last name
 	 * @param author contains data from website about author's name
 	 * @return Only author's last name is returned. Quotation marks and square brackets are skipped
 	 */
-	public static String formatToLastName(String author) {
+	private static String formatToLastName(String author) {
 		String auth = author;				// we don't want to change param author content
-		boolean moreThan1Word = false;		// flag informs, if param author has more than 1 word
-		int indexOfSpace = 0;				/* value shows, where a first space character is 
-											   or stays 0 if word has no space char */
+		boolean moreThan1Word = false;		
+		int indexOfSpace = 0;				
+											   
 		for (int i = 0; i < auth.length(); i++) {
 			char letter = auth.charAt(i);
 			if (letter == ' ') {
@@ -46,7 +48,7 @@ public class Reader {
 		for (int it = 90; it <= 850; it++) {		
 			JSONObject json;
 			try {
-				json = new JSONObject(IOUtils.toString(new URL("http://lektury.gov.pl/api/book/" + it), Charset.forName("UTF-8")));
+				json = new JSONObject(IOUtils.toString(new URL(urlLink + it), Charset.forName("UTF-8")));
 				authorjson = Reader.formatToLastName(json.optString("authors"));
 				if (!(this.authors.containsValue(authorjson))) {
 						this.authors.put(key, authorjson);
@@ -64,9 +66,4 @@ public class Reader {
 			}
 			}
 	}
-	
-	public static void main(String[] args) {
-		
-	}
-
 }
