@@ -10,6 +10,7 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.pvxup.CSVReader.CSV;
 
 public class Reader {
 
@@ -18,38 +19,14 @@ public class Reader {
 	
 	String urlLink = "http://lektury.gov.pl/api/book/";
 	
-	/**
-	 * Method replaces first and last author's name with formatted last name
-	 * @param author contains data from website about author's name
-	 * @return Only author's last name is returned. Quotation marks and square brackets are skipped
-	 */
-	private static String formatToLastName(String author) {
-		String auth = author;				// we don't want to change param author content
-		boolean moreThan1Word = false;		
-		int indexOfSpace = 0;				
-											   
-		for (int i = 0; i < auth.length(); i++) {
-			char letter = auth.charAt(i);
-			if (letter == ' ') {
-				moreThan1Word = true;
-				indexOfSpace = i;
-				break;
-			}
-		}
-		if (!moreThan1Word) 
-			return auth.substring(2, auth.length() -2);	
-		else 
-			return auth.substring(indexOfSpace+1, auth.length() - 2);	
-	}
-	
 	public void addAuthorsAndTitles() {
 		String authorjson;
 		int key = 0;
-		for (int it = 90; it <= 850; it++) {		
+		for (int it = 100; it <= 835; it++) {		
 			JSONObject json;
 			try {
 				json = new JSONObject(IOUtils.toString(new URL(urlLink + it), Charset.forName("UTF-8")));
-				authorjson = Reader.formatToLastName(json.optString("authors"));
+				authorjson = CSV.formatToLastName(json.optString("authors"),true);
 				if (!(this.authors.containsValue(authorjson))) {
 						this.authors.put(key, authorjson);
 						key++;
