@@ -105,7 +105,8 @@ public class CSV {
 			String auth = author;				// we don't want to change param author content
 			boolean moreThan1Word = false;		
 			int indexOfSpace = auth.indexOf(' ');				
-			System.out.println(auth);									   
+			if (indexOfSpace != -1)
+				moreThan1Word = true;
 			if(CSVorWeb==true) { // CSV == true
 				if (!moreThan1Word) 
 					return auth.substring(0, auth.length());	
@@ -125,16 +126,22 @@ public class CSV {
 		int key = 0;
 		List<String> line = parseLine(scanner.nextLine());
         while (scanner.hasNext()) {
-           // line = parseLine(scanner.nextLine());
+           line = parseLine(scanner.nextLine());
            
-            if (!(this.authors.containsValue(formatToLastName(parseLine(scanner.nextLine()).get(2),false)))) {
-				this.authors.put(key, formatToLastName(parseLine(scanner.nextLine()).get(2),false));
+            if (!(authors.containsValue(formatToLastName(line.get(2),true)))) {
+				authors.put(key, formatToLastName(line.get(2),true));
 				key++;
             }
             //System.out.println("Last name: " + formatToLastName(line.get(2)));
-            if (hm.containsValue(formatToLastName(line.get(2),false)))
+            if (hm.containsValue(formatToLastName(line.get(2),true)))
             	System.out.println(line.get(2) + " is on the wishlist");
             		
+        }
+        for (int i = 0; i < authors.size(); i++) {
+        	System.out.println("CSV author: " + authors.get(i));
+        }
+        for (int i = 0; i < hm.size(); i++) {
+        	System.out.println("Reader author: " + hm.get(i));
         }
         scanner.close();
 

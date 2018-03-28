@@ -26,9 +26,9 @@ public class Reader {
 			JSONObject json;
 			try {
 				json = new JSONObject(IOUtils.toString(new URL(urlLink + it), Charset.forName("UTF-8")));
-				authorjson = CSV.formatToLastName(json.optString("authors"),true);
-				if (!(this.authors.containsValue(authorjson))) {
-						this.authors.put(key, authorjson);
+				authorjson = CSV.formatToLastName(json.optString("authors"),false);
+				if (!(authors.containsValue(authorjson))) {
+						authors.put(key, authorjson);
 						key++;
 				}
 				this.titles.put(it, json.optString("title"));
