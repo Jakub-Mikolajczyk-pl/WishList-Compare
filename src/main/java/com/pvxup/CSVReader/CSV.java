@@ -103,22 +103,47 @@ public class CSV {
 	 
 	 public static String formatToLastName(String author, boolean CSVorWeb) {
 			String auth = author;				// we don't want to change param author content
-			boolean moreThan1Word = false;		
-			int indexOfSpace = auth.indexOf(' ');				
+			boolean moreThan1Word = false;
+			boolean bracket = false;
+			int indexOfBracket = auth.indexOf('(');
+			int indexOfSpace = auth.indexOf(' ');	
+			int distanceSpaceBracket = indexOfBracket - indexOfSpace;
+			
 			if (indexOfSpace != -1)
 				moreThan1Word = true;
-			if(CSVorWeb==true) { // CSV == true
+			if (indexOfBracket != -1) {
+				bracket = true;
+			}
+			
+			while (auth.charAt(indexOfSpace + 1) == ' ') {
+				indexOfSpace = indexOfSpace + 1;
+			}
+			
+			if(CSVorWeb) { // CSV == true
 				if (!moreThan1Word) 
-					return auth.substring(0, auth.length());	
-				else 
-					return auth.substring(indexOfSpace+1, auth.length());	
+					return auth.substring(0, auth.length());
+				else if (bracket) {
+					if (distanceSpaceBracket > 1)
+						return auth.substring(indexOfSpace + 1, indexOfBracket - 2);
+					else if (distanceSpaceBracket == 1)
+						return auth.substring(0, indexOfBracket - 2);
+				}
+				else
+					return auth.substring(indexOfSpace + 1, auth.length());	
 			} else {
 				if (!moreThan1Word) 
 					return auth.substring(2, auth.length() -2);	
-				else 
+				else if (bracket) {
+					if (distanceSpaceBracket > 1)
+						return auth.substring(indexOfSpace + 1, indexOfBracket - 2);
+					else if (distanceSpaceBracket == 1)
+						return auth.substring(2, indexOfBracket - 2);
+				}
+				else
 					return auth.substring(indexOfSpace+1, auth.length() - 2);
 			}
-		}
+			return "ERROR";
+	 }
 	
 	public void CSVAddAuthors(Map<Integer, String> hm) throws FileNotFoundException {
 		
