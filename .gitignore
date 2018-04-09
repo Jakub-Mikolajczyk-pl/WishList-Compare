@@ -40,3 +40,4 @@ local.properties
 .settings/
 .loadpath
 /target/
+goodreads_library_export.csv
